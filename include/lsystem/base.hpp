@@ -37,6 +37,7 @@ namespace realmar::lsystem::base {
                     const std::vector<ProductionRule> &productionRules);
 
         virtual ~BaseLSystem() = default;
+        std::vector<std::string> GoToIteration(int i) override;
         void Reset() override;
         void Print() override;
     };

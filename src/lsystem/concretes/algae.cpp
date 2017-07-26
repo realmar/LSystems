@@ -13,16 +13,6 @@ namespace realmar::lsystem::concretes {
         }
     ) { };
 
-    std::vector<std::string> Algae::GoToIteration(int i) {
-        std::vector<std::string> results;
-
-        for(unsigned int j = 0; j <= i; j++) {
-            results.push_back(Next());
-        }
-
-        return results;
-    }
-
     std::string Algae::Next() {
         for(std::string::iterator i = result.begin(); i < result.end();) {
             for (const ProductionRule &pr : productionRules) {

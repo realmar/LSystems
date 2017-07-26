@@ -17,6 +17,16 @@ BaseLSystem::BaseLSystem(const std::vector<std::string> &alphabet,
     Reset();
 }
 
+std::vector<std::string> BaseLSystem::GoToIteration(int i) {
+    std::vector<std::string> results;
+
+    for(unsigned int j = 0; j <= i; j++) {
+        results.push_back(Next());
+    }
+
+    return results;
+}
+
 void BaseLSystem::Reset() {
     result = axiom;
 }

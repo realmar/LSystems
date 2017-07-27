@@ -5,41 +5,51 @@ namespace realmar::render {
     void OpenGLRenderer::Setup() {
         if(!glfwInit()) {
             std::cerr << "Failed to initialize GLFW"  << std::endl;
+            exit(EXIT_FAILURE);
         }
 
         glfwWindowHint(GLFW_SAMPLES, 4);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-        window = glfwCreateWindow(1024, 768, "Tutorial 01", nullptr, nullptr);
+        window = glfwCreateWindow(512, 512, "L-Systems", nullptr, nullptr);
         if(window == nullptr){
             std::cerr << "Failed to create window" << std::endl;
             glfwTerminate();
+            exit(EXIT_FAILURE);
         }
 
         glfwMakeContextCurrent(window);
-        glewExperimental=true;
-
-        if (glewInit() != GLEW_OK) {
-            std::cerr << "Failed to initialize glew" << std::endl;
-        }
+        glfwSwapInterval(1);
 
         glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     }
 
     void OpenGLRenderer::Teardown() {
-
+        glfwDestroyWindow(window);
+        glfwTerminate();
     }
 
     void OpenGLRenderer::Run() {
-        do{
+        while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
+            // INIT
 
+            glClearColor(0.0, 0.0, 0.0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            // DRAW
+
+            glLoadIdentity();
+            glTranslatef(-1, -1, 0);
+
+            glBegin(GL_LINES);
+            glVertex2f(0, 0);
+            glVertex2f(0.1, 0.1);
+            glEnd();
+
+            // EVENTS
 
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
-        while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
     }
 }

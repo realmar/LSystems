@@ -1,7 +1,6 @@
 #ifndef LSYSTEMS_RENDERER_HPP
 #define LSYSTEMS_RENDERER_HPP
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace realmar::render {

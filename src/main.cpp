@@ -9,7 +9,7 @@ using namespace realmar::lsystem::concretes;
 using namespace realmar::render;
 
 int main() {
-    ILSystem *ils = new KochCurve();
+    ILSystem *ils = new BinaryTree();
 
     ils->GoToIteration(4);
     ils->Print();

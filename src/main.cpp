@@ -2,15 +2,25 @@
 
 #include "lsystem/base.hpp"
 #include "lsystem/concretes.hpp"
+#include "render/renderer.hpp"
 
 using namespace realmar::lsystem::base;
 using namespace realmar::lsystem::concretes;
+using namespace realmar::render;
 
 int main() {
-    std::unique_ptr<ILSystem> ils = std::make_unique<KochCurve>();
+    ILSystem *ils = new KochCurve();
 
     ils->GoToIteration(4);
     ils->Print();
+
+    IRenderer *renderer = new OpenGLRenderer();
+    renderer->Setup();
+    renderer->Run();
+    renderer->Teardown();
+
+    delete ils;
+    delete renderer;
 
     return 0;
 }

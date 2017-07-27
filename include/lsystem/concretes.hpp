@@ -1,7 +1,7 @@
 #ifndef LSYSTEMS_CONCRETES_HPP
 #define LSYSTEMS_CONCRETES_HPP
 
-#include "base.hpp"
+#include "lsystem/base.hpp"
 
 namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(Algae);

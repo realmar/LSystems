@@ -1,7 +1,7 @@
 #include <memory>
 
-#include "base.hpp"
-#include "concretes.hpp"
+#include "lsystem/base.hpp"
+#include "lsystem/concretes.hpp"
 
 using namespace realmar::lsystem::base;
 using namespace realmar::lsystem::concretes;

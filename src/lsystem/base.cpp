@@ -20,11 +20,30 @@ BaseLSystem::BaseLSystem(const std::vector<std::string> &alphabet,
 std::vector<std::string> BaseLSystem::GoToIteration(int i) {
     std::vector<std::string> results;
 
-    for(unsigned int j = 0; j <= i; j++) {
+    for(unsigned int j = 0; j < i; j++) {
         results.push_back(Next());
     }
 
     return results;
+}
+
+std::string BaseLSystem::Next() {
+    for(unsigned int i = 0;;) {
+        for (const ProductionRule &pr : productionRules) {
+            if(std::string(1, result[i]) == pr.predecessor) {
+                result.replace(i, pr.predecessor.length(), pr.successor);
+                i += pr.successor.length() - 1;
+                break;
+            }
+        }
+
+        i++;
+
+        if(i >= result.length())
+            break;
+    }
+
+    return result;
 }
 
 void BaseLSystem::Reset() {

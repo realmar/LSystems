@@ -4,6 +4,12 @@
 #include <string>
 #include <vector>
 
+#define MAKE_DEFAULT_LSYSTEM(name) \
+class name : public realmar::lsystem::base::BaseLSystem { \
+public: \
+    name(); \
+};
+
 namespace realmar::lsystem::base {
     class ProductionRule {
     public:
@@ -38,6 +44,7 @@ namespace realmar::lsystem::base {
 
         virtual ~BaseLSystem() = default;
         std::vector<std::string> GoToIteration(int i) override;
+        std::string Next() override;
         void Reset() override;
         void Print() override;
     };

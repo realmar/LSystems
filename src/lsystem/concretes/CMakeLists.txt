@@ -1,4 +1,2 @@
-file(GLOB SOURCE_FILES algae.cpp binarytree.cpp)
-
-add_library(Concretes STATIC ${SOURCE_FILES} ${Headers})
+add_library(Concretes STATIC ${Headers} cantorset.cpp algae.cpp binarytree.cpp KochCurve.cpp)
 target_link_libraries(Concretes Base)

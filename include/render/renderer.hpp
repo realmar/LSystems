@@ -2,8 +2,23 @@
 #define LSYSTEMS_RENDERER_HPP
 
 #include <GLFW/glfw3.h>
+#include <vector>
 
 namespace realmar::render {
+    struct Vector2f {
+        float x;
+        float y;
+
+        Vector2f operator+=(const Vector2f &other);
+    };
+
+    struct PosRot {
+        Vector2f pos;
+        float rot;
+
+        PosRot operator+=(const PosRot &other);
+    };
+
     class IRenderer {
     public:
         virtual void Setup() = 0;
@@ -22,8 +37,13 @@ namespace realmar::render {
 
     class OpenGLRenderer : public IRenderer {
     private:
-        GLFWwindow *window = nullptr;
+        GLFWwindow *_window = nullptr;
+        std::vector<PosRot> _posRotStack;
+        PosRot _currentTransform {{0, 0}, 0};
+        bool _penDown = false;
     public:
+        float scale = 0.1f;
+
         void Setup() override;
         void Teardown() override;
         void Render() override;

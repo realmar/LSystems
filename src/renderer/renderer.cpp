@@ -29,7 +29,7 @@ namespace realmar::render {
         glfwTerminate();
     }
 
-    void OpenGLRenderer::Run() {
+    void OpenGLRenderer::Render() {
         while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
             // INIT
 
@@ -51,5 +51,34 @@ namespace realmar::render {
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
+    }
+
+    // drawing
+    void OpenGLRenderer::NewDrawing() {
+
+    }
+
+    void OpenGLRenderer::PutPen() {
+
+    }
+
+    void OpenGLRenderer::PullPen() {
+
+    }
+
+    void OpenGLRenderer::Move(const float &dist) {
+
+    }
+
+    void OpenGLRenderer::Rotate(const float &degrees) {
+
+    }
+
+    void OpenGLRenderer::PushPosRot() {
+
+    }
+
+    void OpenGLRenderer::PopPosRot() {
+
     }
 }

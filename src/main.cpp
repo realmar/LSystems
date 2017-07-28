@@ -16,7 +16,7 @@ int main() {
 
     IRenderer *renderer = new OpenGLRenderer();
     renderer->Setup();
-    renderer->Run();
+    renderer->Render();
     renderer->Teardown();
 
     delete ils;

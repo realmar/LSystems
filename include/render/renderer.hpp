@@ -3,6 +3,11 @@
 
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <memory>
+
+namespace realmar::builder {
+    class IDrawBuilder;
+}
 
 namespace realmar::render {
     struct Vector2f {
@@ -33,6 +38,7 @@ namespace realmar::render {
         virtual void Rotate(const float &degrees) = 0;
         virtual void PushPosRot() = 0;
         virtual void PopPosRot() = 0;
+        virtual std::unique_ptr<realmar::builder::IDrawBuilder> GetDrawBuilder() = 0;
     };
 
     class OpenGLRenderer : public IRenderer {
@@ -56,6 +62,8 @@ namespace realmar::render {
         void Rotate(const float &degrees) override;
         void PushPosRot() override;
         void PopPosRot() override;
+
+        std::unique_ptr<realmar::builder::IDrawBuilder> GetDrawBuilder() override;
     };
 }
 

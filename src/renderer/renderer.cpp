@@ -1,5 +1,8 @@
 #include "render/renderer.hpp"
+#include "builder/draw.hpp"
 #include <iostream>
+
+using namespace realmar::builder;
 
 namespace realmar::render {
     Vector2f Vector2f::operator+=(const Vector2f &other) {
@@ -120,4 +123,9 @@ namespace realmar::render {
         glLoadIdentity();
         glRotatef(_currentTransform.rot, 0, 1, 0);
     }
+
+    std::unique_ptr<IDrawBuilder> OpenGLRenderer::GetDrawBuilder() {
+        return std::make_unique<DrawBuilder>(this);
+    }
 }
+

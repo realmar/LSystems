@@ -3,6 +3,7 @@
 #include "lsystem/base.hpp"
 
 using namespace realmar::lsystem::base;
+using namespace realmar::builder;
 
 ProductionRule::ProductionRule(const std::string &predecessor, const std::string &successor) : predecessor(predecessor),
                                                                                                successor(successor) { }
@@ -53,3 +54,5 @@ void BaseLSystem::Reset() {
 void BaseLSystem::Print() {
     std::cout << result << std::endl;
 }
+
+void BaseLSystem::BuildInstructions(realmar::builder::IDrawBuilder &builder) { }

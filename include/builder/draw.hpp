@@ -15,6 +15,8 @@ namespace realmar::builder {
         virtual void Execute() = 0;
     };
 
+    typedef std::vector<std::unique_ptr<IDrawCommand> > DrawInstructions;
+
     class DrawCommand : public IDrawCommand {
     protected:
         std::function<void ()> memberFunc;
@@ -32,7 +34,7 @@ namespace realmar::builder {
         virtual void Rotate(const float &degrees) = 0;
         virtual void PushPosRot() = 0;
         virtual void PopPosRot() = 0;
-        virtual const std::vector<std::unique_ptr<IDrawCommand> >& Build() = 0;
+        virtual const DrawInstructions& Build() = 0;
     };
 
     class DrawBuilder : public IDrawBuilder {
@@ -47,7 +49,7 @@ namespace realmar::builder {
         void Rotate(const float &degrees) override;
         void PushPosRot() override;
         void PopPosRot() override;
-        const std::vector<std::unique_ptr<IDrawCommand> >& Build() override;
+        const DrawInstructions& Build() override;
     };
 }
 

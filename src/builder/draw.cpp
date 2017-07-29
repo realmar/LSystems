@@ -31,7 +31,7 @@ void DrawBuilder::PopPosRot() {
     instructions.emplace_back(std::make_unique<DrawCommand>(target, &IRenderer::PullPen));
 }
 
-const std::vector<std::unique_ptr<IDrawCommand> >& DrawBuilder::Build() {
+const DrawInstructions& DrawBuilder::Build() {
     return instructions;
 }
 

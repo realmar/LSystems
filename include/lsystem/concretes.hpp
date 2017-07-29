@@ -5,6 +5,7 @@
 
 namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(Algae);
+
     MAKE_DEFAULT_LSYSTEM(BinaryTree);
     MAKE_DEFAULT_LSYSTEM(CantorSet);
     MAKE_DEFAULT_LSYSTEM(KochCurve);

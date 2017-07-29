@@ -1,6 +1,8 @@
 #ifndef LSYSTEMS_BASE_HPP
 #define LSYSTEMS_BASE_HPP
 
+#include "builder/draw.hpp"
+
 #include <string>
 #include <vector>
 
@@ -8,6 +10,7 @@
 class name : public realmar::lsystem::base::BaseLSystem { \
 public: \
     name(); \
+    void BuildInstructions(realmar::builder::IDrawBuilder& builder) override; \
 };
 
 namespace realmar::lsystem::base {
@@ -25,6 +28,7 @@ namespace realmar::lsystem::base {
         virtual std::string Next() = 0;
         virtual void Print() = 0;
         virtual void Reset() = 0;
+        virtual void BuildInstructions(realmar::builder::IDrawBuilder &builder) = 0;
     };
 
     class BaseLSystem : public ILSystem {
@@ -47,6 +51,7 @@ namespace realmar::lsystem::base {
         std::string Next() override;
         void Reset() override;
         void Print() override;
+        void BuildInstructions(realmar::builder::IDrawBuilder &builder) override;
     };
 }
 

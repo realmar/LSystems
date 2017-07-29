@@ -42,11 +42,11 @@ namespace realmar::render {
     };
 
     class OpenGLRenderer : public IRenderer {
-    private:
-        GLFWwindow *_window = nullptr;
-        std::vector<PosRot> _posRotStack;
-        PosRot _currentTransform {{0, 0}, 0};
-        bool _penDown = false;
+    protected:
+        GLFWwindow *window = nullptr;
+        std::vector<PosRot> posRotStack;
+        PosRot currentTransform {{0, 0}, 0};
+        bool penDown = false;
     public:
         float scale = 0.1f;
 

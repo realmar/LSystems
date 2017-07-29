@@ -1,10 +1,13 @@
 #ifndef LSYSTEMS_DRAW_HPP
 #define LSYSTEMS_DRAW_HPP
 
-#include "render/renderer.hpp"
 #include <vector>
 #include <functional>
 #include <memory>
+
+namespace realmar::render {
+    class IRenderer;
+}
 
 namespace realmar::builder {
     typedef void (realmar::render::IRenderer::*RendererMember)();
@@ -15,7 +18,8 @@ namespace realmar::builder {
         virtual void Execute() = 0;
     };
 
-    typedef std::vector<std::unique_ptr<IDrawCommand> > DrawInstructions;
+    typedef std::vector<std::unique_ptr<IDrawCommand> > DrawInstructionsValue;
+    typedef std::shared_ptr<DrawInstructionsValue> DrawInstructions;
 
     class DrawCommand : public IDrawCommand {
     protected:
@@ -40,7 +44,7 @@ namespace realmar::builder {
     class DrawBuilder : public IDrawBuilder {
     protected:
         realmar::render::IRenderer *target;
-        std::vector<std::unique_ptr<IDrawCommand> > instructions;
+        DrawInstructions instructions = std::make_shared<DrawInstructionsValue>();
     public:
         explicit DrawBuilder(realmar::render::IRenderer *target);
         void PutPen() override;

@@ -5,9 +5,7 @@
 #include <vector>
 #include <memory>
 
-namespace realmar::builder {
-    class IDrawBuilder;
-}
+#include "builder/draw.hpp"
 
 namespace realmar::render {
     struct Vector2f {
@@ -38,7 +36,9 @@ namespace realmar::render {
         virtual void Rotate(const float &degrees) = 0;
         virtual void PushPosRot() = 0;
         virtual void PopPosRot() = 0;
+
         virtual std::unique_ptr<realmar::builder::IDrawBuilder> GetDrawBuilder() = 0;
+        virtual void InjectInstructions(realmar::builder::DrawInstructions instructions) = 0;
     };
 
     class OpenGLRenderer : public IRenderer {
@@ -64,6 +64,7 @@ namespace realmar::render {
         void PopPosRot() override;
 
         std::unique_ptr<realmar::builder::IDrawBuilder> GetDrawBuilder() override;
+        void InjectInstructions(realmar::builder::DrawInstructions instructions) override;
     };
 }
 

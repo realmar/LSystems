@@ -34,7 +34,7 @@ namespace realmar::render {
         realmar::builder::DrawInstructions drawInstructions;
         bool penDown = false;
     public:
-        float scale = 0.06f;
+        float scale = 0.016f;
 
         void Setup() override;
         void Teardown() override;

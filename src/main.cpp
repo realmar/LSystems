@@ -10,7 +10,7 @@ using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    ILSystem *ils = new SierpinskiArrowhead();
+    ILSystem *ils = new FractalPlant();
 
     ils->GoToIteration(6);
     ils->Print();

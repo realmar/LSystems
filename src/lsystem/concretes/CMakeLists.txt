@@ -1,2 +1,2 @@
-add_library(Concretes STATIC ${Headers} cantorset.cpp algae.cpp binarytree.cpp KochCurve.cpp sierpinski.cpp sierpinski_arrowhead.cpp dragoncurve.cpp)
+add_library(Concretes STATIC ${Headers} cantorset.cpp algae.cpp binarytree.cpp KochCurve.cpp sierpinski.cpp sierpinski_arrowhead.cpp dragoncurve.cpp fractalplant.cpp)
 target_link_libraries(Concretes Base)

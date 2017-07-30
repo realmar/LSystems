@@ -12,6 +12,7 @@ namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(CantorSet);
     MAKE_DEFAULT_LSYSTEM(KochCurve);
     MAKE_DEFAULT_LSYSTEM(DragonCurve);
+    MAKE_DEFAULT_LSYSTEM(FractalPlant);
 
     class Sierpinski : public realmar::lsystem::base::BaseLSystem {
     protected:

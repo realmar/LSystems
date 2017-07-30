@@ -6,20 +6,6 @@
 using namespace realmar::builder;
 
 namespace realmar::render {
-    Vector2f Vector2f::operator+=(const Vector2f &other) {
-        x += other.x;
-        y += other.y;
-
-        return Vector2f {x, y};
-    }
-
-    PosRot PosRot::operator+=(const PosRot &other) {
-        pos += other.pos;
-        rot += other.rot;
-
-        return PosRot {pos, rot};
-    }
-
     void OpenGLRenderer::Setup() {
         if(!glfwInit()) {
             std::cerr << "Failed to initialize GLFW"  << std::endl;

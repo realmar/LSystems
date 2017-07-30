@@ -8,20 +8,6 @@
 #include "builder/draw.hpp"
 
 namespace realmar::render {
-    struct Vector2f {
-        float x;
-        float y;
-
-        Vector2f operator+=(const Vector2f &other);
-    };
-
-    struct PosRot {
-        Vector2f pos;
-        float rot;
-
-        PosRot operator+=(const PosRot &other);
-    };
-
     class IRenderer {
     public:
         virtual void Setup() = 0;

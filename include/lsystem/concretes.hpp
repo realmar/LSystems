@@ -14,6 +14,7 @@ namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(DragonCurve);
     MAKE_DEFAULT_LSYSTEM(FractalPlant);
     MAKE_DEFAULT_LSYSTEM(HilbertCurve);
+    MAKE_DEFAULT_LSYSTEM(LevyCCurve);
 
     class Sierpinski : public realmar::lsystem::base::BaseLSystem {
     protected:

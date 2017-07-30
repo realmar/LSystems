@@ -10,9 +10,9 @@ using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    ILSystem *ils = new BinaryTree();
+    ILSystem *ils = new KochCurve();
 
-    ils->GoToIteration(6);
+    ils->GoToIteration(4);
     ils->Print();
 
     IRenderer *renderer = new OpenGLRenderer();

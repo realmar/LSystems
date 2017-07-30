@@ -3,6 +3,9 @@
 
 #include "lsystem/base.hpp"
 
+#define FOR_INSTRUCTIONS for(std::string::iterator i = result.begin(); i < result.end(); i++)
+#define GET_CHARACTER std::string character(1, *i);
+
 namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(Algae);
 

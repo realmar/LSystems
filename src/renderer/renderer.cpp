@@ -72,7 +72,7 @@ namespace realmar::render {
     // drawing
     void OpenGLRenderer::NewDrawing() {
         glLoadIdentity();
-        glTranslatef(0, -1, 0);
+        glTranslatef(0, -0.8f, 0);
     }
 
     void OpenGLRenderer::PutPen() {

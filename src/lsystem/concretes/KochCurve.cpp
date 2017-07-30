@@ -14,6 +14,19 @@ namespace realmar::lsystem::concretes {
     ) { }
 
     void KochCurve::BuildInstructions(realmar::builder::IDrawBuilder &builder) {
+        builder.PutPen();
+        builder.Rotate(90);
 
+        FOR_INSTRUCTIONS {
+            GET_CHARACTER
+
+            if(character == "F") {
+                builder.Move(1);
+            }else if(character == "+") {
+                builder.Rotate(-90);
+            }else if(character == "-") {
+                builder.Rotate(90);
+            }
+        };
     }
 }

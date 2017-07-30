@@ -1,3 +1,4 @@
+#include <iostream>
 #include "builder/draw.hpp"
 #include "render/renderer.hpp"
 
@@ -29,7 +30,7 @@ void DrawBuilder::PushPosRot() {
 }
 
 void DrawBuilder::PopPosRot() {
-    instructions->emplace_back(std::make_unique<DrawCommand>(target, &IRenderer::PullPen));
+    instructions->emplace_back(std::make_unique<DrawCommand>(target, &IRenderer::PopPosRot));
 }
 
 const DrawInstructions& DrawBuilder::Build() {
@@ -37,13 +38,11 @@ const DrawInstructions& DrawBuilder::Build() {
 }
 
 DrawCommand::DrawCommand(IRenderer *target, RendererMember member) {
-    auto m = std::bind(member, target);
-    memberFunc = [&m](){ m(); };
+    memberFunc = std::bind(member, target);
 }
 
 DrawCommand::DrawCommand(IRenderer *target, RendererMemberArg member, const float& arg) {
-    auto m = std::bind(member, target, arg);
-    memberFunc = [&m](){ m(); };
+    memberFunc = std::bind(member, target, arg);
 }
 
 void DrawCommand::Execute() {

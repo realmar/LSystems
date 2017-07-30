@@ -12,7 +12,7 @@ using namespace realmar::builder;
 int main() {
     ILSystem *ils = new BinaryTree();
 
-    ils->GoToIteration(4);
+    ils->GoToIteration(6);
     ils->Print();
 
     IRenderer *renderer = new OpenGLRenderer();

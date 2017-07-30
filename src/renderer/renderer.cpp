@@ -1,6 +1,7 @@
 #include "render/renderer.hpp"
 #include "builder/draw.hpp"
 #include <iostream>
+#include <cmath>
 
 using namespace realmar::builder;
 
@@ -55,13 +56,11 @@ namespace realmar::render {
 
             // DRAW
 
-            glLoadIdentity();
-            glTranslatef(-1, -1, 0);
-
-            glBegin(GL_LINES);
-            glVertex2f(0, 0);
-            glVertex2f(0.1, 0.1);
-            glEnd();
+            if(drawInstructions != nullptr) {
+                for(auto i = drawInstructions->begin(); i < drawInstructions->end(); i++) {
+                    (*i)->Execute();
+                }
+            }
 
             // EVENTS
 
@@ -72,8 +71,8 @@ namespace realmar::render {
 
     // drawing
     void OpenGLRenderer::NewDrawing() {
-        posRotStack.clear();
-        currentTransform = {{0, 0}, 0};
+        glLoadIdentity();
+        glTranslatef(0, -1, 0);
     }
 
     void OpenGLRenderer::PutPen() {
@@ -87,41 +86,28 @@ namespace realmar::render {
     void OpenGLRenderer::Move(const float &dist) {
         float y = dist * scale;
 
-        PosRot lastTranform = currentTransform;
-        currentTransform += PosRot {{0, y}, 0};
-
-        // reset matrix to identity
-        glLoadIdentity();
-        glRotatef(lastTranform.rot, 0, 1, 0);
-
         if(penDown) {
-            glBegin(GL_LINE);
+            glBegin(GL_LINES);
 
-            glVertex2f(lastTranform.pos.x, lastTranform.pos.y);
-            glVertex2f(currentTransform.pos.x, currentTransform.pos.y);
+            glVertex2f(0, 0);
+            glVertex2f(0, y);
 
             glEnd();
         }
+
+        glTranslatef(0, y, 0);
     }
 
     void OpenGLRenderer::Rotate(const float &degrees) {
-        currentTransform += PosRot {{0, 0}, degrees};
+        glRotatef(-degrees, 0, 0, 1);
     }
 
     void OpenGLRenderer::PushPosRot() {
-        posRotStack.emplace_back(currentTransform);
+        glPushMatrix();
     }
 
     void OpenGLRenderer::PopPosRot() {
-        if(posRotStack.empty())
-            return;
-
-        currentTransform = posRotStack.back();
-        posRotStack.erase(posRotStack.end() - 1);
-
-        // reset matrix to identity
-        glLoadIdentity();
-        glRotatef(currentTransform.rot, 0, 1, 0);
+        glPopMatrix();
     }
 
     std::unique_ptr<IDrawBuilder> OpenGLRenderer::GetDrawBuilder() {
@@ -129,7 +115,7 @@ namespace realmar::render {
     }
 
     void OpenGLRenderer::InjectInstructions(realmar::builder::DrawInstructions instructions) {
-
+        drawInstructions = instructions;
     }
 }
 

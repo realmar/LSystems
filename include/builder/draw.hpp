@@ -18,7 +18,8 @@ namespace realmar::builder {
         virtual void Execute() = 0;
     };
 
-    typedef std::vector<std::unique_ptr<IDrawCommand> > DrawInstructionsValue;
+    typedef std::unique_ptr<IDrawCommand> DrawInstruction;
+    typedef std::vector<DrawInstruction> DrawInstructionsValue;
     typedef std::shared_ptr<DrawInstructionsValue> DrawInstructions;
 
     class DrawCommand : public IDrawCommand {

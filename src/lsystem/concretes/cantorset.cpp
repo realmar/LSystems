@@ -15,6 +15,16 @@ namespace realmar::lsystem::concretes {
     ) { }
 
     void CantorSet::BuildInstructions(realmar::builder::IDrawBuilder &builder) {
+        FOR_INSTRUCTIONS {
+            GET_CHARACTER
 
+            if(character == "A") {
+                builder.PutPen();
+            }else if(character == "B"){
+                builder.PullPen();
+            }
+
+            builder.Move(1);
+        };
     }
 }

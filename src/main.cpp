@@ -10,9 +10,9 @@ using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    ILSystem *ils = new KochCurve();
+    ILSystem *ils = new SierpinskiArrowhead();
 
-    ils->GoToIteration(4);
+    ils->GoToIteration(6);
     ils->Print();
 
     IRenderer *renderer = new OpenGLRenderer();

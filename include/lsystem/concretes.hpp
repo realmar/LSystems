@@ -8,10 +8,29 @@
 
 namespace realmar::lsystem::concretes {
     MAKE_DEFAULT_LSYSTEM(Algae);
-
     MAKE_DEFAULT_LSYSTEM(BinaryTree);
     MAKE_DEFAULT_LSYSTEM(CantorSet);
     MAKE_DEFAULT_LSYSTEM(KochCurve);
+
+    class Sierpinski : public realmar::lsystem::base::BaseLSystem {
+    protected:
+        float angle;
+    public:
+        explicit Sierpinski(const std::vector<realmar::lsystem::base::ProductionRule> &productionRules =
+                {
+                        realmar::lsystem::base::ProductionRule("F", "F-G+F+G-F"),
+                        realmar::lsystem::base::ProductionRule("G", "GG")
+                },
+                const float& angle = 120
+        );
+
+        void BuildInstructions(realmar::builder::IDrawBuilder& builder) override;
+    };
+
+    class SierpinskiArrowhead : public Sierpinski {
+    public:
+        SierpinskiArrowhead();
+    };
 }
 
 #endif //LSYSTEMS_CONCRETES_HPP

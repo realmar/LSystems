@@ -2,6 +2,7 @@
 #define LSYSTEMS_BASE_HPP
 
 #include "builder/draw.hpp"
+#include "lsystem/interfaces.hpp"
 
 #include <string>
 #include <vector>
@@ -20,15 +21,6 @@ namespace realmar::lsystem::base {
         const std::string successor;
 
         ProductionRule(const std::string &predecessor, const std::string &successor);
-    };
-
-    class ILSystem {
-    public:
-        virtual std::vector<std::string> GoToIteration(int i) = 0;
-        virtual std::string Next() = 0;
-        virtual void Print() = 0;
-        virtual void Reset() = 0;
-        virtual void BuildInstructions(realmar::builder::IDrawBuilder &builder) = 0;
     };
 
     class BaseLSystem : public ILSystem {

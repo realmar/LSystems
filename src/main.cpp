@@ -2,29 +2,23 @@
 #include "lsystem/base.hpp"
 #include "lsystem/concretes.hpp"
 #include "render/renderer.hpp"
-#include "builder/draw.hpp"
-#include "lsystem/factory.hpp"
-#include "lsystem/ptrs.hpp"
+#include "lsystem/facade.hpp"
 
+using namespace realmar::lsystem;
 using namespace realmar::lsystem::base;
 using namespace realmar::lsystem::concretes;
 using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    realmar::lsystem::ILSystem_ptr ils = realmar::lsystem::LSystemFactory::Create("FractalPlant");
-
-    ils->GoToIteration(6);
-    ils->Print();
+    LSystemFacade facade;
 
     IRenderer *renderer = new OpenGLRenderer();
 
-    DrawBuilder builder(renderer);
-    ils->BuildInstructions(builder);
-    DrawInstructions instructions = builder.Build();
-
     renderer->Setup();
-    renderer->InjectInstructions(instructions);
+    renderer->InjectInstructions(
+            facade.GetInstructionsForLSystem("FractalPlant", 6)
+    );
     renderer->Render();
     renderer->Teardown();
 

@@ -4,11 +4,9 @@
 #include <memory>
 #include <map>
 
-namespace realmar::lsystem {
-    namespace base {
-        class ILSystem;
-    }
+#include "lsystem/interfaces.hpp"
 
+namespace realmar::lsystem {
     class ILSystemFactory;
 
     typedef std::shared_ptr<base::ILSystem> ILSystem_ptr;

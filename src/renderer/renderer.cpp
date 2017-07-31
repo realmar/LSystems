@@ -44,7 +44,7 @@ namespace realmar::render {
 
             if(drawInstructions != nullptr) {
                 for(auto i = drawInstructions->begin(); i < drawInstructions->end(); i++) {
-                    (*i)->Execute();
+                    (*i)->Execute(this);
                 }
             }
 
@@ -97,11 +97,7 @@ namespace realmar::render {
         glPopMatrix();
     }
 
-    std::unique_ptr<IDrawBuilder> OpenGLRenderer::GetDrawBuilder() {
-        return std::make_unique<DrawBuilder>(this);
-    }
-
-    void OpenGLRenderer::InjectInstructions(realmar::builder::DrawInstructions instructions) {
+    void OpenGLRenderer::InjectInstructions(realmar::builder::DrawInstructions_ptr instructions) {
         drawInstructions = instructions;
     }
 }

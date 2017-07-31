@@ -6,6 +6,7 @@
 #include <memory>
 #include <exception>
 
+#include "lsystem/interfaces.hpp"
 #include "lsystem/ptrs.hpp"
 
 #define MAKE_DEFAULT_FACTORY(name) \
@@ -28,11 +29,6 @@ namespace realmar::lsystem::base {
 namespace realmar::lsystem {
     class FactoryNotFound : public std::exception {
         const char *what() const throw();
-    };
-
-    class ILSystemFactory {
-    public:
-        virtual ILSystem_ptr create() = 0;
     };
 
     class LSystemFactory {

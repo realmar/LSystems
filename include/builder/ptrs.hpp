@@ -14,9 +14,9 @@ namespace realmar::builder {
     typedef void (realmar::render::IRenderer::*RendererMember)();
     typedef void (realmar::render::IRenderer::*RendererMemberArg)(const float&);
 
-    typedef std::unique_ptr<IDrawCommand> DrawInstruction;
-    typedef std::vector<DrawInstruction> DrawInstructionsValue;
-    typedef std::shared_ptr<DrawInstructionsValue> DrawInstructions;
+    typedef std::unique_ptr<IDrawCommand> DrawInstruction_ptr;
+    typedef std::vector<DrawInstruction_ptr> DrawInstructionsValue;
+    typedef std::shared_ptr<DrawInstructionsValue> DrawInstructions_ptr;
 }
 
 #endif //LSYSTEMS_PTRS_HPP

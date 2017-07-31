@@ -3,6 +3,7 @@
 #include "lsystem/concretes.hpp"
 #include "render/renderer.hpp"
 #include "builder/draw.hpp"
+#include "lsystem/factory.hpp"
 
 using namespace realmar::lsystem::base;
 using namespace realmar::lsystem::concretes;
@@ -10,7 +11,7 @@ using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    ILSystem *ils = new FractalPlant();
+    realmar::lsystem::ILSystem_ptr ils = realmar::lsystem::LSystemFactory::Create("FractalPlant");
 
     ils->GoToIteration(6);
     ils->Print();
@@ -26,7 +27,6 @@ int main() {
     renderer->Render();
     renderer->Teardown();
 
-    delete ils;
     delete renderer;
 
     return 0;

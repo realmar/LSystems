@@ -6,6 +6,8 @@
 #include <memory>
 #include <exception>
 
+#include "lsystem/ptrs.hpp"
+
 #define MAKE_DEFAULT_FACTORY(name) \
 class name##Factory : public ILSystemFactory { \
 public: \
@@ -28,18 +30,14 @@ namespace realmar::lsystem {
         const char *what() const throw();
     };
 
-    typedef std::shared_ptr<base::ILSystem> ILSystem_ptr;
-
     class ILSystemFactory {
     public:
         virtual ILSystem_ptr create() = 0;
     };
 
-    typedef std::shared_ptr<ILSystemFactory> ILSystemFactory_ptr;
-    typedef std::map<std::string, ILSystemFactory_ptr> FactoryMap;
-
     class LSystemFactory {
     private:
+        // https://stackoverflow.com/questions/8057682/accessing-a-static-map-from-a-static-member-function-segmentation-fault-c?rq=1
         static FactoryMap &GetFactoryMap() {
             static FactoryMap fmap;
             return fmap;

@@ -5,22 +5,13 @@
 #include <functional>
 #include <memory>
 
-namespace realmar::render {
-    class IRenderer;
-}
+#include "builder/ptrs.hpp"
 
 namespace realmar::builder {
-    typedef void (realmar::render::IRenderer::*RendererMember)();
-    typedef void (realmar::render::IRenderer::*RendererMemberArg)(const float&);
-
     class IDrawCommand {
     public:
         virtual void Execute() = 0;
     };
-
-    typedef std::unique_ptr<IDrawCommand> DrawInstruction;
-    typedef std::vector<DrawInstruction> DrawInstructionsValue;
-    typedef std::shared_ptr<DrawInstructionsValue> DrawInstructions;
 
     class DrawCommand : public IDrawCommand {
     protected:

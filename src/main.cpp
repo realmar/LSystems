@@ -4,6 +4,7 @@
 #include "render/renderer.hpp"
 #include "builder/draw.hpp"
 #include "lsystem/factory.hpp"
+#include "lsystem/ptrs.hpp"
 
 using namespace realmar::lsystem::base;
 using namespace realmar::lsystem::concretes;

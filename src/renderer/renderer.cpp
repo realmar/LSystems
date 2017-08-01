@@ -1,7 +1,9 @@
 #include "render/renderer.hpp"
 #include "builder/draw.hpp"
+
 #include <iostream>
 #include <cmath>
+#include <limits>
 
 using namespace realmar::builder;
 
@@ -25,6 +27,26 @@ namespace realmar::render {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
 
+        glfwSetWindowUserPointer(window, custWindow.get());
+        glfwSetMouseButtonCallback(window, genericCallback(OnMouseClick));
+        glfwSetScrollCallback(window, genericCallback(OnScroll));
+        glfwSetKeyCallback(window, genericCallback(OnKey));
+
+        custWindow->OnKey = [this](auto self, int key, int scancode, int action, int mods){
+            if(action == GLFW_PRESS) {
+                switch (key) {
+                    case GLFW_KEY_UP:
+                        this->iteration++;
+                        break;
+                    case GLFW_KEY_DOWN:
+                        this->iteration = std::clamp(iteration - 1, 1, std::numeric_limits<int>::max());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
         glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     }
 
@@ -35,12 +57,16 @@ namespace realmar::render {
 
     void OpenGLRenderer::Render() {
         while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
-            // INIT
+            // GET INSTRUCTIONS
+
+            DrawInstructions_ptr drawInstructions = facade.GetInstructionsForLSystem("FractalPlant", (unsigned int)iteration);
+
+            // INIT FRAME
 
             glClearColor(0.0, 0.0, 0.0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            // DRAW
+            // DRAW FRAME
 
             if(drawInstructions != nullptr) {
                 for(auto i = drawInstructions->begin(); i < drawInstructions->end(); i++) {
@@ -48,7 +74,7 @@ namespace realmar::render {
                 }
             }
 
-            // EVENTS
+            // EVENTS AND BUFFERS
 
             glfwSwapBuffers(window);
             glfwPollEvents();
@@ -97,8 +123,7 @@ namespace realmar::render {
         glPopMatrix();
     }
 
-    void OpenGLRenderer::InjectInstructions(realmar::builder::DrawInstructions_ptr instructions) {
-        drawInstructions = instructions;
+    void OpenGLRenderer::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     }
 }
 

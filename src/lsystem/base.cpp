@@ -20,6 +20,7 @@ BaseLSystem::BaseLSystem(const std::vector<std::string> &alphabet,
 
 std::vector<std::string> BaseLSystem::GoToIteration(int i) {
     std::vector<std::string> results;
+    Reset();
 
     for(unsigned int j = 0; j < i; j++) {
         results.push_back(Next());

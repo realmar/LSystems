@@ -11,14 +11,9 @@ using namespace realmar::render;
 using namespace realmar::builder;
 
 int main() {
-    LSystemFacade facade;
-
     IRenderer *renderer = new OpenGLRenderer();
 
     renderer->Setup();
-    renderer->InjectInstructions(
-            facade.GetInstructionsForLSystem("FractalPlant", 6)
-    );
     renderer->Render();
     renderer->Teardown();
 

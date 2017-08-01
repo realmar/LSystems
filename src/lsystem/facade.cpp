@@ -18,11 +18,12 @@ namespace realmar::lsystem {
             MakeInstructions();
         }else if(_lsystem != nullptr) {
             if(_iteration < iteration) {
-                for(unsigned int i = 0; i <= iteration - _iteration; i++)
+                for(unsigned int i = 0; i <= iteration - _iteration - 1; i++)
                     _lsystem->Next();
                 MakeInstructions();
             }else if(_iteration > iteration) {
                 _lsystem->GoToIteration(iteration);
+                MakeInstructions();
             }
         }
 

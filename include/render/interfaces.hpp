@@ -18,8 +18,6 @@ namespace realmar::render {
         virtual void Rotate(const float &degrees) = 0;
         virtual void PushPosRot() = 0;
         virtual void PopPosRot() = 0;
-
-        virtual void InjectInstructions(realmar::builder::DrawInstructions_ptr instructions) = 0;
     };
 }
 

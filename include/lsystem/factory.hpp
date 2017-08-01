@@ -41,6 +41,7 @@ namespace realmar::lsystem {
     public:
         static void RegisterType(std::pair<std::string, ILSystemFactory_ptr> factory);
         static ILSystem_ptr Create(const std::string &name);
+        static FactoryEnumerate_ptr EnumerateFactories();
     };
 }
 

@@ -32,6 +32,7 @@ namespace realmar::render {
 
         realmar::lsystem::LSystemFacade facade;
         int iteration = 1;
+        std::string lsystem;
     public:
         float scale = 0.016f;
 

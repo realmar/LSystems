@@ -19,3 +19,13 @@ ILSystem_ptr LSystemFactory::Create(const std::string &name) {
 
     throw FactoryNotFound();
 }
+
+FactoryEnumerate_ptr LSystemFactory::EnumerateFactories() {
+    FactoryEnumerate_ptr enumerate = std::make_shared<FactoryEnumerateValue>();
+
+    for (auto &i : GetFactoryMap()) {
+        enumerate->emplace_back(i.first);
+    }
+
+    return enumerate;
+}

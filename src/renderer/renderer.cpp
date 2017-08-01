@@ -41,6 +41,26 @@ namespace realmar::render {
                     case GLFW_KEY_DOWN:
                         this->iteration = std::clamp(iteration - 1, 1, std::numeric_limits<int>::max());
                         break;
+                    case GLFW_KEY_0:
+                        break;
+                    case GLFW_KEY_1:
+                        break;
+                    case GLFW_KEY_2:
+                        break;
+                    case GLFW_KEY_3:
+                        break;
+                    case GLFW_KEY_4:
+                        break;
+                    case GLFW_KEY_5:
+                        break;
+                    case GLFW_KEY_6:
+                        break;
+                    case GLFW_KEY_7:
+                        break;
+                    case GLFW_KEY_8:
+                        break;
+                    case GLFW_KEY_9:
+                        break;
                     default:
                         break;
                 }
@@ -48,6 +68,8 @@ namespace realmar::render {
         };
 
         glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+        lsystem = facade.GetLSystemNames()->at(1);
     }
 
     void OpenGLRenderer::Teardown() {
@@ -59,7 +81,7 @@ namespace realmar::render {
         while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
             // GET INSTRUCTIONS
 
-            DrawInstructions_ptr drawInstructions = facade.GetInstructionsForLSystem("FractalPlant", (unsigned int)iteration);
+            DrawInstructions_ptr drawInstructions = facade.GetInstructionsForLSystem(lsystem, (unsigned int)iteration);
 
             // INIT FRAME
 

@@ -38,4 +38,8 @@ namespace realmar::lsystem {
         _lsystem->BuildInstructions(builder);
         _drawInstructions = builder.Build();
     }
+
+    FactoryEnumerate_ptr LSystemFacade::GetLSystemNames() {
+        return LSystemFactory::EnumerateFactories();
+    }
 }

@@ -61,6 +61,9 @@ namespace realmar::render {
         Vector2 lastMousePos;
         Vector2 currMousePos;
         bool isMouseKeyDown = false;
+
+        const unsigned int width = 768;
+        const unsigned int height = 768;
     public:
         float drawScale = 0.008f;
 

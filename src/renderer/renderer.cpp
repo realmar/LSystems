@@ -51,8 +51,8 @@ namespace realmar::render {
         glutInit(&i, &c[0]);
 
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-        glutInitWindowSize(1280, 768);
-        glutInitWindowPosition(100,100);
+        glutInitWindowSize(width, height);
+        glutInitWindowPosition(100, 100);
 
         glutCreateWindow("L-Systems");
 
@@ -86,7 +86,7 @@ namespace realmar::render {
 
                 double scale = 0.01;
 
-                std::cout << diff.x << " : " << diff.y << std::endl;
+                // std::cout << diff.x << " : " << diff.y << std::endl;
 
                 pos3.x += diff.x * scale;
                 pos3.y -= diff.y * scale;

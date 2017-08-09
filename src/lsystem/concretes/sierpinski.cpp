@@ -12,8 +12,6 @@ namespace realmar::lsystem::concretes {
     ), angle(angle) { }
 
     void Sierpinski::BuildInstructions(realmar::builder::IDrawBuilder &builder) {
-        float angle = 60;
-
         builder.PutPen();
 
         FOR_INSTRUCTIONS {

@@ -51,6 +51,9 @@ namespace realmar::render {
         std::shared_ptr<EventProxy> events = std::make_shared<EventProxy>();
         bool penDown = false;
 
+        int window;
+        int rightClickMenu;
+
         realmar::lsystem::LSystemFacade facade;
         int iteration = 1;
         std::string lsystem;

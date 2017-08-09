@@ -54,11 +54,11 @@ namespace realmar::render {
         glutInitWindowSize(width, height);
         glutInitWindowPosition(100, 100);
 
-        glutCreateWindow("L-Systems");
+        window = glutCreateWindow("L-Systems");
 
         glutSetWindowData(reinterpret_cast<void*>(events.get()));
 
-        glutCreateMenu(genericCallback(OnMenu));
+        rightClickMenu = glutCreateMenu(genericCallback(OnMenu));
         unsigned int counter = 0;
 
         auto names = facade.GetLSystemNames();
@@ -109,6 +109,11 @@ namespace realmar::render {
                 }
             }
 
+            glLoadIdentity();
+
+            glRasterPos2f(-1, -1);
+            glutBitmapString(GLUT_BITMAP_HELVETICA_18, reinterpret_cast<const unsigned char *>("text to render"));
+
             // EVENTS
 
             glutSwapBuffers();
@@ -128,6 +133,8 @@ namespace realmar::render {
                 case 'd':
                     currRotation -= 10;
                     break;
+                case 27:
+                    glutLeaveMainLoop();
                 default:
                     break;
             }
@@ -173,6 +180,8 @@ namespace realmar::render {
     }
 
     void OpenGLRenderer::Teardown() {
+        glutDestroyMenu(rightClickMenu);
+        glutDestroyWindow(window);
     }
 
     void OpenGLRenderer::Render() {

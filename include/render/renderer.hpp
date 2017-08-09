@@ -62,6 +62,8 @@ namespace realmar::render {
         Vector2 currMousePos;
         bool isMouseKeyDown = false;
 
+        double currRotation = 0.0;
+
         const unsigned int width = 768;
         const unsigned int height = 768;
     public:

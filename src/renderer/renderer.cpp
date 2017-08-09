@@ -122,6 +122,12 @@ namespace realmar::render {
                 case 's':
                     this->iteration = std::clamp(iteration - 1, 1, std::numeric_limits<int>::max());
                     break;
+                case 'a':
+                    currRotation += 10;
+                    break;
+                case 'd':
+                    currRotation -= 10;
+                    break;
                 default:
                     break;
             }
@@ -179,6 +185,7 @@ namespace realmar::render {
         glLoadIdentity();
         glTranslatef(pos3.x, pos3.y, pos3.z);
         glScalef(scale3.x, scale3.y, scale3.z);
+        glRotatef(currRotation, 0, 0, 1);
     }
 
     void OpenGLRenderer::PutPen() {

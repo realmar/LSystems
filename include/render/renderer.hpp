@@ -16,6 +16,16 @@
     }
 
 namespace realmar::render {
+    class Vector2 {
+    public:
+        double x = 0;
+        double y = 0;
+
+        bool operator==(const Vector2& other) const;
+        bool operator!=(const Vector2& other) const;
+        Vector2 operator-(const Vector2& other) const;
+    };
+
     class Vector3 {
     public:
         double x = 0;
@@ -29,9 +39,11 @@ namespace realmar::render {
     class EventProxy {
     public:
         std::function<void(EventProxy*)> Main = [](auto self) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*, int, int, int, int)> OnMouse = [](auto self, int, int, int, int) {  /* Default is do nothing */ };
         std::function<void(EventProxy*, int, int, int, int)> OnScroll = [](auto self, int, int, int, int) {  /* Default is do nothing */ };
         std::function<void(EventProxy*, unsigned char, int, int)> OnKey = [](auto self, unsigned char, int, int) {  /* Default is do nothing */ };
         std::function<void(EventProxy*, int)> OnMenu = [](auto self, int) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*, int, int)> OnMotion = [](auto self, int, int) {  /* Default is do nothing */ };
     };
 
     class OpenGLRenderer : public IRenderer {
@@ -45,8 +57,12 @@ namespace realmar::render {
 
         Vector3 pos3{0, -1, 0};
         Vector3 scale3{1, 1, 1};
+
+        Vector2 lastMousePos;
+        Vector2 currMousePos;
+        bool isMouseKeyDown = false;
     public:
-        float drawScale = 0.016f;
+        float drawScale = 0.008f;
 
         void Setup() override;
         void Teardown() override;

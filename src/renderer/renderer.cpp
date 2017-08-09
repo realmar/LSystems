@@ -11,6 +11,18 @@
 using namespace realmar::builder;
 
 namespace realmar::render {
+    bool Vector2::operator==(const Vector2& other) const {
+        return x == other.x && y == other.y;
+    }
+
+    bool Vector2::operator!=(const Vector2& other) const {
+        return !(*this == other);
+    }
+
+    Vector2 Vector2::operator-(const Vector2& other) const {
+        return Vector2{x - other.x, y - other.y};
+    }
+
     Vector3 Vector3::operator*(const double& scalar) const {
         return Vector3{x * scalar, y * scalar, z * scalar};
     }
@@ -39,7 +51,7 @@ namespace realmar::render {
         glutInit(&i, &c[0]);
 
         glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-        glutInitWindowSize(512, 512);
+        glutInitWindowSize(1280, 768);
         glutInitWindowPosition(100,100);
 
         glutCreateWindow("L-Systems");
@@ -59,10 +71,27 @@ namespace realmar::render {
         glutDisplayFunc(genericCallback(Main));
         glutKeyboardUpFunc(genericCallback(OnKey));
         glutMouseWheelFunc(genericCallback(OnScroll));
+        glutMouseFunc(genericCallback(OnMouse));
+
+        glutPassiveMotionFunc(genericCallback(OnMotion));
+        glutMotionFunc(genericCallback(OnMotion));
 
         glutTimerFunc(10, GlutTimerFunc, 0);
 
         events->Main = [this](auto self) {
+            // MOUSE INPUT
+
+            if(isMouseKeyDown) {
+                Vector2 diff = currMousePos - lastMousePos;
+
+                double scale = 0.01;
+
+                std::cout << diff.x << " : " << diff.y << std::endl;
+
+                pos3.x += diff.x * scale;
+                pos3.y -= diff.y * scale;
+            }
+
             // GET INSTRUCTIONS
 
             DrawInstructions_ptr drawInstructions = facade.GetInstructionsForLSystem(lsystem, (unsigned int)iteration);
@@ -98,8 +127,21 @@ namespace realmar::render {
             }
         };
 
+        events->OnMouse = [this](auto self, int button, int state, int x, int y){
+            switch (state) {
+                case GLUT_DOWN:
+                    isMouseKeyDown = true;
+                    break;
+                case GLUT_UP:
+                    isMouseKeyDown = false;
+                    break;
+                default:
+                    isMouseKeyDown = false;
+                    break;
+            }
+        };
+
         events->OnScroll = [this](auto self, int wheel, int direction, int x, int y) {
-            std::cout << direction << std::endl;
             if(direction == 1) {
                 scale3 *= 1.1;
             }else if(direction == -1) {
@@ -109,7 +151,16 @@ namespace realmar::render {
 
         events->OnMenu = [this](auto self, int item) {
             iteration = 2;
+            pos3 = Vector3{0, -1, 0};
+            scale3 = Vector3{1, 1, 1};
             lsystem = facade.GetLSystemNames()->at(item);
+        };
+
+        events->OnMotion = [this](auto self, int x, int y) {
+            lastMousePos = currMousePos;
+            currMousePos = Vector2{(double)x, (double)y};
+
+            // std::cout << "lastMouse: " << lastMousePos.x << " : " << lastMousePos.y << "currMouse: " << currMousePos.x << " : " << currMousePos.y << std::endl;
         };
 
         lsystem = facade.GetLSystemNames()->at(1);

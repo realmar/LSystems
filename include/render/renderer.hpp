@@ -1,7 +1,6 @@
 #ifndef LSYSTEMS_RENDERER_HPP
 #define LSYSTEMS_RENDERER_HPP
 
-#include<GLFW/glfw3.h>
 #include <vector>
 #include <memory>
 #include <functional>
@@ -10,24 +9,24 @@
 #include "builder/ptrs.hpp"
 #include "lsystem/facade.hpp"
 
-namespace realmar::render {
-    #define genericCallback(functionName) \
-        [](GLFWwindow* window, auto... args) { \
-            auto pointer = static_cast<GLFWCustomWindow*>(glfwGetWindowUserPointer(window)); \
-            if (pointer->functionName) pointer->functionName(pointer, args...); \
-        }
+#define genericCallback(functionName) \
+    [](auto... args) { \
+        auto pointer = reinterpret_cast<EventProxy*>(glutGetWindowData()); \
+        if (pointer->functionName) pointer->functionName(pointer, args...); \
+    }
 
-    class GLFWCustomWindow {
+namespace realmar::render {
+    class EventProxy {
     public:
-        std::function<void(GLFWCustomWindow*, int, int, int)> OnMouseClick = [](auto self, int, int, int) {  /* Default is do nothing */ };
-        std::function<void(GLFWCustomWindow*, double, double)> OnScroll = [](auto self, double, double) {  /* Default is do nothing */ };
-        std::function<void(GLFWCustomWindow*, int, int, int, int)> OnKey = [](auto self, int, int, int, int) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*)> Main = [](auto self) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*, int, int, int, int)> OnScroll = [](auto self, int, int, int, int) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*, unsigned char, int, int)> OnKey = [](auto self, unsigned char, int, int) {  /* Default is do nothing */ };
+        std::function<void(EventProxy*, int)> OnMenu = [](auto self, int) {  /* Default is do nothing */ };
     };
 
     class OpenGLRenderer : public IRenderer {
     protected:
-        GLFWwindow *window = nullptr;
-        std::shared_ptr<GLFWCustomWindow> custWindow = std::make_shared<GLFWCustomWindow>();
+        std::shared_ptr<EventProxy> events = std::make_shared<EventProxy>();
         bool penDown = false;
 
         realmar::lsystem::LSystemFacade facade;
@@ -48,9 +47,6 @@ namespace realmar::render {
         void Rotate(const float &degrees) override;
         void PushPosRot() override;
         void PopPosRot() override;
-
-        // callbacks
-        void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     };
 }
 

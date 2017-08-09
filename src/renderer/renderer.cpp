@@ -5,80 +5,50 @@
 #include <cmath>
 #include <limits>
 
+#include <GL/freeglut.h>
+#include <chrono>
+
 using namespace realmar::builder;
 
 namespace realmar::render {
+    void GlutTimerFunc(int) {
+        glutPostRedisplay();
+        glutTimerFunc(10, GlutTimerFunc, 0);
+    }
+
     void OpenGLRenderer::Setup() {
-        if(!glfwInit()) {
-            std::cerr << "Failed to initialize GLFW"  << std::endl;
-            exit(EXIT_FAILURE);
-        }
+        // this will be bad if trying to access those args
+        // --> will produce a segfault
+        int i = 1;
+        std::vector<char*> c{'a'};
 
-        glfwWindowHint(GLFW_SAMPLES, 4);
-        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+        glutInit(&i, &c[0]);
 
-        window = glfwCreateWindow(512, 512, "L-Systems", nullptr, nullptr);
-        if(window == nullptr){
-            std::cerr << "Failed to create window" << std::endl;
-            glfwTerminate();
-            exit(EXIT_FAILURE);
-        }
+        glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+        glutInitWindowSize(512, 512);
+        glutInitWindowPosition(100,100);
 
-        glfwMakeContextCurrent(window);
-        glfwSwapInterval(1);
+        glutCreateWindow("L-Systems");
 
-        glfwSetWindowUserPointer(window, custWindow.get());
-        glfwSetMouseButtonCallback(window, genericCallback(OnMouseClick));
-        glfwSetScrollCallback(window, genericCallback(OnScroll));
-        glfwSetKeyCallback(window, genericCallback(OnKey));
+        glutSetWindowData(reinterpret_cast<void*>(events.get()));
 
-        custWindow->OnKey = [this](auto self, int key, int scancode, int action, int mods){
-            if(action == GLFW_PRESS) {
-                switch (key) {
-                    case GLFW_KEY_UP:
-                        this->iteration++;
-                        break;
-                    case GLFW_KEY_DOWN:
-                        this->iteration = std::clamp(iteration - 1, 1, std::numeric_limits<int>::max());
-                        break;
-                    case GLFW_KEY_0:
-                        break;
-                    case GLFW_KEY_1:
-                        break;
-                    case GLFW_KEY_2:
-                        break;
-                    case GLFW_KEY_3:
-                        break;
-                    case GLFW_KEY_4:
-                        break;
-                    case GLFW_KEY_5:
-                        break;
-                    case GLFW_KEY_6:
-                        break;
-                    case GLFW_KEY_7:
-                        break;
-                    case GLFW_KEY_8:
-                        break;
-                    case GLFW_KEY_9:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
+        glutCreateMenu(genericCallback(OnMenu));
+        unsigned int counter = 0;
 
-        glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+        auto names = facade.GetLSystemNames();
+        std::for_each(names->begin(), names->end(), [&counter](const std::string& name) {
+            glutAddMenuEntry(name.c_str(), counter++);
+        });
 
-        lsystem = facade.GetLSystemNames()->at(1);
-    }
+        glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-    void OpenGLRenderer::Teardown() {
-        glfwDestroyWindow(window);
-        glfwTerminate();
-    }
+        glutDisplayFunc(genericCallback(Main));
+        glutKeyboardUpFunc(genericCallback(OnKey));
+        glutMouseWheelFunc(genericCallback(OnScroll));
 
-    void OpenGLRenderer::Render() {
-        while(glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0) {
+        glutTimerFunc(10, GlutTimerFunc, 0);
+
+        events->Main = [this](auto self) {
             // GET INSTRUCTIONS
 
             DrawInstructions_ptr drawInstructions = facade.GetInstructionsForLSystem(lsystem, (unsigned int)iteration);
@@ -96,11 +66,37 @@ namespace realmar::render {
                 }
             }
 
-            // EVENTS AND BUFFERS
+            // EVENTS
 
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
+            glutSwapBuffers();
+        };
+
+        events->OnKey = [this](auto self, unsigned char key, int x, int y){
+            switch (key) {
+                case 'w':
+                    this->iteration++;
+                    break;
+                case 's':
+                    this->iteration = std::clamp(iteration - 1, 1, std::numeric_limits<int>::max());
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        events->OnMenu = [this](auto self, int item) {
+            iteration = 2;
+            lsystem = facade.GetLSystemNames()->at(item);
+        };
+
+        lsystem = facade.GetLSystemNames()->at(1);
+    }
+
+    void OpenGLRenderer::Teardown() {
+    }
+
+    void OpenGLRenderer::Render() {
+        glutMainLoop();
     }
 
     // drawing
@@ -143,9 +139,6 @@ namespace realmar::render {
 
     void OpenGLRenderer::PopPosRot() {
         glPopMatrix();
-    }
-
-    void OpenGLRenderer::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     }
 }
 

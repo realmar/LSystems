@@ -1,6 +1,9 @@
 find_package(OpenGL REQUIRED)
 
-set(GLFW_LIBRARIES glfw)
+find_package(GLUT REQUIRED)
+set(GLUT_LIBRARIES freeglut)
+
+include_directories(${GLUT_INCLUDE_DIRS})
 
 add_library(Renderer STATIC ${Headers} renderer.cpp)
-target_link_libraries(Renderer ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} Builder)
+target_link_libraries(Renderer ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} Builder)

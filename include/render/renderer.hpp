@@ -16,6 +16,16 @@
     }
 
 namespace realmar::render {
+    class Vector3 {
+    public:
+        double x = 0;
+        double y = 0;
+        double z = 0;
+
+        Vector3 operator*(const double& scalar) const;
+        Vector3 operator*=(const double& scalar);
+    };
+
     class EventProxy {
     public:
         std::function<void(EventProxy*)> Main = [](auto self) {  /* Default is do nothing */ };
@@ -32,8 +42,11 @@ namespace realmar::render {
         realmar::lsystem::LSystemFacade facade;
         int iteration = 1;
         std::string lsystem;
+
+        Vector3 pos3{0, -1, 0};
+        Vector3 scale3{1, 1, 1};
     public:
-        float scale = 0.016f;
+        float drawScale = 0.016f;
 
         void Setup() override;
         void Teardown() override;

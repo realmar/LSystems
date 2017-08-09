@@ -11,6 +11,20 @@
 using namespace realmar::builder;
 
 namespace realmar::render {
+    Vector3 Vector3::operator*(const double& scalar) const {
+        return Vector3{x * scalar, y * scalar, z * scalar};
+    }
+
+    Vector3 Vector3::operator*=(const double& scalar) {
+        Vector3 tmp = (*this) *  scalar;
+
+        x = tmp.x;
+        y = tmp.z;
+        z = tmp.z;
+
+        return *this;
+    }
+
     void GlutTimerFunc(int) {
         glutPostRedisplay();
         glutTimerFunc(10, GlutTimerFunc, 0);
@@ -84,6 +98,15 @@ namespace realmar::render {
             }
         };
 
+        events->OnScroll = [this](auto self, int wheel, int direction, int x, int y) {
+            std::cout << direction << std::endl;
+            if(direction == 1) {
+                scale3 *= 1.1;
+            }else if(direction == -1) {
+                scale3 *= 0.9;
+            }
+        };
+
         events->OnMenu = [this](auto self, int item) {
             iteration = 2;
             lsystem = facade.GetLSystemNames()->at(item);
@@ -103,7 +126,8 @@ namespace realmar::render {
     void OpenGLRenderer::NewDrawing() {
         PullPen();
         glLoadIdentity();
-        glTranslatef(0, -1, 0);
+        glTranslatef(pos3.x, pos3.y, pos3.z);
+        glScalef(scale3.x, scale3.y, scale3.z);
     }
 
     void OpenGLRenderer::PutPen() {
@@ -115,7 +139,7 @@ namespace realmar::render {
     }
 
     void OpenGLRenderer::Move(const float &dist) {
-        float y = dist * scale;
+        float y = dist * drawScale;
 
         if(penDown) {
             glBegin(GL_LINES);

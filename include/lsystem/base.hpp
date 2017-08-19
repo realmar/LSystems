@@ -21,6 +21,8 @@ namespace realmar::lsystem::base {
         const std::string successor;
 
         ProductionRule(const std::string &predecessor, const std::string &successor);
+
+        virtual ~ProductionRule() = default;
     };
 
     class BaseLSystem : public ILSystem {

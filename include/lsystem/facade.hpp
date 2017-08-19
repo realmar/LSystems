@@ -16,6 +16,8 @@ namespace realmar::lsystem {
     public:
         realmar::builder::DrawInstructions_ptr GetInstructionsForLSystem(const std::string &name, const unsigned int &iteration);
         FactoryEnumerate_ptr GetLSystemNames();
+
+        virtual ~LSystemFacade() = default;
     };
 }
 

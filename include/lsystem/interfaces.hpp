@@ -12,6 +12,8 @@ namespace realmar::lsystem::base {
         virtual void Print() = 0;
         virtual void Reset() = 0;
         virtual void BuildInstructions(realmar::builder::IDrawBuilder &builder) = 0;
+
+        virtual ~ILSystem() = default;
     };
 }
 
@@ -19,6 +21,8 @@ namespace realmar::lsystem {
     class ILSystemFactory {
     public:
         virtual std::shared_ptr<base::ILSystem> create() = 0;
+
+        virtual ~ILSystemFactory() = default;
     };
 }
 

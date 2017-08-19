@@ -11,6 +11,8 @@ namespace realmar::builder {
     class IDrawCommand {
     public:
         virtual void Execute(realmar::render::IRenderer* target) = 0;
+
+        virtual ~IDrawCommand() = default;
     };
 
     class IDrawBuilder {
@@ -22,6 +24,8 @@ namespace realmar::builder {
         virtual void PushPosRot() = 0;
         virtual void PopPosRot() = 0;
         virtual const DrawInstructions_ptr& Build() = 0;
+
+        virtual ~IDrawBuilder() = default;
     };
 }
 

@@ -3,3 +3,10 @@
 
 # build
 cmake-build-debug/*
+*.cmake
+*.sln
+*.vcx*
+CMakeCache.txt
+*.dir
+Debug
+CMakeFiles
